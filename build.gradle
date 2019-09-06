@@ -1,50 +1,35 @@
-apply plugin: 'java'
 apply plugin: 'maven'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "https://marinaliu.pkgs.visualstudio.com/_packaging/test/maven/v1") {
+                authentication(userName: "AZURE_ARTIFACTS", password: System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") ?: "${azureArtifactsGradleAccessToken}")
+            }
+//            pom.version = "$project.version"
+//            pom.artifactId = "$artifactId"
+//            pom.groupId = "$project.group"
 
-group = 'com.github.jitpack'
+//            compile('com.vx.loginUtilsx:loginUtils:1.0.18')
+//            compile('com.vx.utilx:utils:1.0.51')
+//            compile('vx.tools:vx.tools.framework.utils:1.0.2-RELEASE')
+//            compile('vx.tools:vx.tools.mybatis.generator:0.5-RELEASE'
 
-sourceCompatibility = 1.8 // java 8
-targetCompatibility = 1.8
+            pom.groupId = "com.vx.loginUtilsx"
+            pom.artifactId = "loginUtils"
+            pom.version = "1.0.18"
 
-repositories {
-  mavenCentral()
-}
+//            pom.groupId = "com.vx.utilx"
+//            pom.artifactId = "utils"
+//            pom.version = "1.0.51"
 
-dependencies {
-  compile 'com.google.guava:guava:18.0'
-}
+//            pom.groupId = "vx.tools"
+//            pom.artifactId = "vx.tools.framework.utils"
+//            pom.version = "1.0.2-RELEASE"
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
+//            pom.groupId = "vx.tools"
+//            pom.artifactId = "vx.tools.mybatis.generator"
+//            pom.version = "0.5-RELEASE"
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
-
-// To specify a license in the pom:
-install {
-  repositories.mavenInstaller {
-    pom.project {
-      licenses {
-        license {
-          name 'The Apache Software License, Version 2.0'
-          url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-          distribution 'repo'
         }
-      }
     }
-  }
-}
-
-wrapper {
-    gradleVersion = "5.1.1"
-    distributionType = Wrapper.DistributionType.ALL
 }
